@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WSwipe layout: Thai Kedmanee, 11 columns.
+  c     = character typed on tap
+  hold  = second character, typed on long-press (and shown as the main
+          character while Shift is on, because swap="true")
+  more  = extra choices in the long-press popup (slide to pick)
+  All rows are 11 equal columns; Shift sits bottom-right (cyan).
+-->
+<layout id="th_kedmanee_11" name="ไทย" locale="th" kind="language"
+        keyWidth="9.0909" swap="true" spaces="false">
+  <row>
+    <key c="ๆ" hold="๑" more="1"/>
+    <key c="ๅ" hold="๒" more="2"/>
+    <key c="ภ" hold="๓" more="3"/>
+    <key c="ถ" hold="๔" more="4"/>
+    <key c="ุ" hold="ู"/>
+    <key c="ึ" hold="฿"/>
+    <key c="ค" hold="๕" more="5,ฅ"/>
+    <key c="ต" hold="๖" more="6"/>
+    <key c="จ" hold="๗" more="7"/>
+    <key c="ข" hold="๘" more="8,ฃ"/>
+    <key c="ช" hold="๙" more="9,๐,0"/>
+  </row>
+  <row>
+    <key c="ไ" hold="&quot;"/>
+    <key c="ำ" hold="ฎ"/>
+    <key c="พ" hold="ฑ"/>
+    <key c="ะ" hold="ธ"/>
+    <key c="ั" hold="ํ"/>
+    <key c="ี" hold="๊"/>
+    <key c="ร" hold="ณ"/>
+    <key c="น" hold="ฯ"/>
+    <key c="ย" hold="ญ"/>
+    <key c="บ" hold="ฐ"/>
+    <key c="ล" hold=","/>
+  </row>
+  <row>
+    <key c="ฟ" hold="ฤ"/>
+    <key c="ห" hold="ฆ"/>
+    <key c="ก" hold="ฏ"/>
+    <key c="ด" hold="โ"/>
+    <key c="เ" hold="ฌ"/>
+    <key c="้" hold="็"/>
+    <key c="่" hold="๋"/>
+    <key c="า" hold="ษ"/>
+    <key c="ส" hold="ศ"/>
+    <key c="ว" hold="ซ"/>
+    <key c="ง" hold="."/>
+  </row>
+  <row>
+    <key c="ผ" hold="("/>
+    <key c="ป" hold=")"/>
+    <key c="แ" hold="ฉ"/>
+    <key c="อ" hold="ฮ"/>
+    <key c="ิ" hold="ฺ"/>
+    <key c="ื" hold="์"/>
+    <key c="ท" hold="?"/>
+    <key c="ม" hold="ฒ"/>
+    <key c="ใ" hold="ฬ"/>
+    <key c="ฝ" hold="ฦ"/>
+    <key fn="backspace" shade="medium"/>
+  </row>
+  <row>
+    <key fn="language" shade="dark" w="12"/>
+    <key fn="numeric" shade="dark" w="12"/>
+    <key c="," shade="medium" w="12"/>
+    <key fn="space" w="28"/>
+    <key c="." hold="…" more=".,?,&quot;,_,',-,@,#,&amp;,:,/,\,&lt;,&gt;,!,`,~,°" shade="medium" w="12"/>
+    <key fn="enter" shade="action" w="17"/>
+    <key fn="shift" shade="special" w="7"/>
+  </row>
+</layout>

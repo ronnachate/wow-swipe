@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WSwipe layout: English QWERTY. Long-press a letter for its second character. -->
+<layout id="en_qwerty" name="English" locale="en" kind="language"
+        keyWidth="10" swap="false" spaces="true">
+  <row>
+    <key c="q" hold="1" more="ǫ,½,¼"/>
+    <key c="w" hold="2" more="ŵ,²"/>
+    <key c="e" hold="3" more="è,é,ê,ë,ē,ę,€,³"/>
+    <key c="r" hold="4" more="®,ŕ,ř,⁴"/>
+    <key c="t" hold="5" more="™,ţ,ť,θ"/>
+    <key c="y" hold="6" more="ŷ,ÿ,ý"/>
+    <key c="u" hold="7" more="ù,ú,û,ü,ū"/>
+    <key c="i" hold="8" more="ì,í,î,ï,ī,∞"/>
+    <key c="o" hold="9" more="ò,ó,ô,õ,ö,ø,œ,º"/>
+    <key c="p" hold="0" more="¶,π"/>
+  </row>
+  <row>
+    <gap w="5"/>
+    <key c="a" hold="@" more="à,á,â,ã,ä,å,æ,ā"/>
+    <key c="s" hold="#" more="ś,ş,š,ß,§"/>
+    <key c="d" hold="&amp;" more="ď,đ,°"/>
+    <key c="f" hold="*" more="×,ƒ"/>
+    <key c="g" hold="-" more="~,ğ"/>
+    <key c="h" hold="+" more="±"/>
+    <key c="j" hold="=" more="≠,≈"/>
+    <key c="k" hold="(" more="&lt;,[,{"/>
+    <key c="l" hold=")" more="&gt;,],},ł"/>
+    <gap w="5"/>
+  </row>
+  <row>
+    <key fn="shift" shade="medium" w="15"/>
+    <key c="z" hold="_" more="ź,ż,ž"/>
+    <key c="x" hold="$" more="€,£,¢,¥,฿"/>
+    <key c="c" hold="&quot;" more="©,ç,ć,č"/>
+    <key c="v" hold="'" more="`,´"/>
+    <key c="b" hold=":" more="://"/>
+    <key c="n" hold=";" more="ñ,ń,ň"/>
+    <key c="m" hold="/" more="\,÷,μ"/>
+    <key fn="backspace" shade="medium" w="15"/>
+  </row>
+  <row>
+    <key fn="language" shade="dark" w="12"/>
+    <key fn="numeric" shade="dark" w="12"/>
+    <key c="," shade="medium" w="12"/>
+    <key fn="space" w="28"/>
+    <key c="." hold="…" more=".,?,&quot;,_,',-,@,#,&amp;,:,/,\,&lt;,&gt;,!,`,~,°" shade="medium" w="12"/>
+    <key fn="enter" shade="action" w="17"/>
+    <key fn="switch" shade="special" w="7"/>
+  </row>
+</layout>

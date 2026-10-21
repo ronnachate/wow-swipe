@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WSwipe layout: symbols. -->
+<layout id="symbol" name="#+=" locale="" kind="symbol" keyWidth="10" swap="false" spaces="true">
+  <row>
+    <key c="#"/><key c="/" hold="÷"/><key c="-"/><key c="_" hold="±"/><key c="°"/>
+    <key c="©"/><key c="®"/><key c="™"/><key c="("/><key c=")"/>
+  </row>
+  <row>
+    <key c="@"/><key c="*" hold="×"/><key c="+"/><key c="≈"/><key c=":"/>
+    <key c=";"/><key c="\"/><key c="`"/><key c="["/><key c="]"/>
+  </row>
+  <row>
+    <key c="$" hold="…" more="€,£,¢,¥,₽,฿,₩,₭,₫,₱,₨,¤"/><key c="%"/><key c="="/><key c="≠"/><key c="&lt;"/>
+    <key c="&gt;"/><key c="≤"/><key c="≥"/><key c="{"/><key c="}"/>
+  </row>
+  <row>
+    <key c="^"/><key c="&amp;"/><key c="|"/><key c="~"/><key c="!" hold="¡"/>
+    <key c="?" hold="¿"/><key c="'"/><key c="&quot;"/><gap w="5"/>
+    <key fn="backspace" shade="medium" w="15"/>
+  </row>
+  <row>
+    <key fn="alpha" shade="dark" w="12"/>
+    <key fn="numeric" shade="dark" w="12"/>
+    <key c="," shade="medium" w="12"/>
+    <key fn="space" w="28"/>
+    <key c="." hold="…" more=".,?,&quot;,_,',-,@,#,&amp;,:,/,\,&lt;,&gt;,!,`,~,°" shade="medium" w="12"/>
+    <key fn="enter" shade="action" w="17"/>
+    <key fn="switch" shade="special" w="7"/>
+  </row>
+</layout>

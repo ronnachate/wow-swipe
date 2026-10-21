@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WSwipe layout: number pad. -->
+<layout id="numeric" name="123" locale="" kind="numeric" keyWidth="12" swap="false" spaces="true">
+  <row>
+    <key c="#" shade="medium"/>
+    <key c="/" hold="÷" shade="medium"/>
+    <gap w="3.5"/>
+    <key c="1" w="15"/>
+    <key c="2" w="15"/>
+    <key c="3" w="15"/>
+    <gap w="3.5"/>
+    <key c="-" shade="medium"/>
+    <key c="_" hold="±" shade="medium"/>
+  </row>
+  <row>
+    <key c="@" shade="medium"/>
+    <key c="*" hold="×" shade="medium"/>
+    <gap w="3.5"/>
+    <key c="4" w="15"/>
+    <key c="5" w="15"/>
+    <key c="6" w="15"/>
+    <gap w="3.5"/>
+    <key c="+" shade="medium"/>
+    <key c=":" shade="medium"/>
+  </row>
+  <row>
+    <key c="$" hold="…" more="€,£,¢,¥,₽,฿,₩,₭,₫,₱,₨,¤" shade="medium"/>
+    <key c="%" shade="medium"/>
+    <gap w="3.5"/>
+    <key c="7" w="15"/>
+    <key c="8" w="15"/>
+    <key c="9" w="15"/>
+    <gap w="3.5"/>
+    <key c="=" hold="…" more="≠,≈,&lt;,&gt;,≤,≥" shade="medium"/>
+    <key c=";" shade="medium"/>
+  </row>
+  <row>
+    <key c="^" hold="…" more="&amp;,|,~" shade="medium"/>
+    <key c="!" hold="¡" shade="medium"/>
+    <gap w="3.5"/>
+    <key c="(" hold="…" more="[,{" shade="medium" w="15"/>
+    <key c="0" w="15"/>
+    <key c=")" hold="…" more="],}" shade="medium" w="15"/>
+    <gap w="12.5"/>
+    <key fn="backspace" shade="medium" w="15"/>
+  </row>
+  <row>
+    <key fn="alpha" shade="dark" w="12"/>
+    <key fn="symbol" shade="dark" w="12"/>
+    <key c="," shade="medium" w="12"/>
+    <key fn="space" w="28"/>
+    <key c="." hold="…" more=".,?,&quot;,_,',-,@,#,&amp;,:,/,\,&lt;,&gt;,!,`,~,°" shade="medium" w="12"/>
+    <key fn="enter" shade="action" w="17"/>
+    <key fn="switch" shade="special" w="7"/>
+  </row>
+</layout>
