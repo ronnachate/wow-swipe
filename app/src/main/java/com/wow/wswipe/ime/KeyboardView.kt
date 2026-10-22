@@ -250,11 +250,11 @@ class KeyboardView(context: Context) : View(context) {
                 val w = k.width
                 text.textSize = min(h * (if (l.kind == LayoutKind.LANGUAGE) 0.48f else 0.42f), w * 0.58f)
                 text.typeface = keyTypeface   // medium weight: easier to read than regular
-                drawKeyText(canvas, main, k.cx, cy + h * 0.03f)
+                drawKeyText(canvas, main, k.cx, cy + h * 0.08f)
                 text.typeface = Typeface.DEFAULT
                 if (small != null) {
                     text.color = cAltText
-                    text.textSize = min(h * 0.20f, w * 0.26f)
+                    text.textSize = min(h * 0.34f, w * 0.46f)   // second-layer hint, easy to read
                     drawHint(canvas, small, k.right - min(7 * dp, w * 0.12f), k.top + 4 * dp + min(5 * dp, h * 0.06f))
                 }
             }
@@ -333,6 +333,16 @@ class KeyboardView(context: Context) : View(context) {
 
     /** Small second-layer hint, pinned to the key's top-right corner by its ink. */
     private fun drawHint(canvas: Canvas, s: String, right: Float, top: Float) {
+        // Tone/vowel marks (๋ ๊ ็ ์ …) are tiny glyphs: draw them much larger so they're readable.
+        if (s.length == 1 && isMark(s[0])) {
+            val size = text.textSize
+            text.textSize = size * 1.6f
+            drawHintText(canvas, s, right, top)
+            text.textSize = size
+        } else drawHintText(canvas, s, right, top)
+    }
+
+    private fun drawHintText(canvas: Canvas, s: String, right: Float, top: Float) {
         val d = display(s)
         text.textAlign = Paint.Align.LEFT
         text.getTextBounds(d, 0, d.length, bounds)
