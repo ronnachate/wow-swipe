@@ -88,6 +88,7 @@ class KeyboardView(context: Context) : View(context) {
     private val cPopupSel = Color.rgb(160, 182, 198)     // selected popup choice: soft blue-grey
     private val cText = Color.BLACK
     private val cAltText = Color.rgb(70, 70, 70)
+    private val cHintText = Color.rgb(40, 40, 40)          // corner hints: darker so they read clearly
     private val cLightText = Color.WHITE
 
     private fun keyColor(k: Key, down: Boolean, hold: Boolean): Int = when (k.shade) {
@@ -134,6 +135,19 @@ class KeyboardView(context: Context) : View(context) {
     private var popupSel = 0
     private val popupRect = RectF()
     private var popupCellW = 0f
+    /** Popup runs right-to-left (key near the right edge), so choice 0 stays under the finger. */
+    private var popupReverse = false
+    /** Finger x when the popup opened; small wobbles around it keep the default choice. */
+    private var popupHoldX = 0f
+    private var popupMoved = false
+
+    private fun popupCellLeft(i: Int) =
+        if (popupReverse) popupRect.right - (i + 1) * popupCellW else popupRect.left + i * popupCellW
+
+    private fun popupIndexAt(x: Float): Int {
+        val raw = if (popupReverse) (popupRect.right - x) / popupCellW else (x - popupRect.left) / popupCellW
+        return raw.toInt().coerceIn(0, popupChoices.size - 1)
+    }
 
     private val longPressRunnable = Runnable { onLongPress() }
     private var stripLongFired = false
@@ -250,11 +264,12 @@ class KeyboardView(context: Context) : View(context) {
                 val w = k.width
                 text.textSize = min(h * (if (l.kind == LayoutKind.LANGUAGE) 0.48f else 0.42f), w * 0.58f)
                 text.typeface = keyTypeface   // medium weight: easier to read than regular
-                drawKeyText(canvas, main, k.cx, cy + h * 0.03f)
+                drawKeyText(canvas, main, k.cx, cy + h * 0.10f)
                 text.typeface = Typeface.DEFAULT
                 if (small != null) {
-                    text.color = cAltText
-                    text.textSize = min(h * 0.20f, w * 0.26f)
+                    text.color = cHintText
+                    text.typeface = keyTypeface
+                    text.textSize = min(h * 0.37f, w * 0.50f)   // second-layer hint, easy to read
                     drawHint(canvas, small, k.right - min(7 * dp, w * 0.12f), k.top + 4 * dp + min(5 * dp, h * 0.06f))
                 }
             }
@@ -333,6 +348,16 @@ class KeyboardView(context: Context) : View(context) {
 
     /** Small second-layer hint, pinned to the key's top-right corner by its ink. */
     private fun drawHint(canvas: Canvas, s: String, right: Float, top: Float) {
+        // Tone/vowel marks (๋ ๊ ็ ์ …) are tiny glyphs: draw them much larger so they're readable.
+        if (s.length == 1 && isMark(s[0])) {
+            val size = text.textSize
+            text.textSize = size * 1.6f
+            drawHintText(canvas, s, right, top)
+            text.textSize = size
+        } else drawHintText(canvas, s, right, top)
+    }
+
+    private fun drawHintText(canvas: Canvas, s: String, right: Float, top: Float) {
         val d = display(s)
         text.textAlign = Paint.Align.LEFT
         text.getTextBounds(d, 0, d.length, bounds)
@@ -363,7 +388,7 @@ class KeyboardView(context: Context) : View(context) {
         fill.color = Color.rgb(40, 40, 40)
         canvas.drawRoundRect(popupRect, 6 * dp, 6 * dp, fill)
         for ((i, c) in popupChoices.withIndex()) {
-            val left = popupRect.left + i * popupCellW
+            val left = popupCellLeft(i)
             rect.set(left + 2 * dp, popupRect.top + 2 * dp, left + popupCellW - 2 * dp, popupRect.bottom - 2 * dp)
             fill.color = if (i == popupSel) cPopupSel else Color.rgb(150, 150, 150)
             canvas.drawRoundRect(rect, 7 * dp, 7 * dp, fill)
@@ -438,7 +463,10 @@ class KeyboardView(context: Context) : View(context) {
         addPoint(x, y)
         val l = layout ?: return
         if (popupKey != null) {
-            val idx = ((x - popupRect.left) / popupCellW).toInt().coerceIn(0, popupChoices.size - 1)
+            // Keep the default (second character) until the finger clearly slides.
+            if (!popupMoved && abs(x - popupHoldX) < popupCellW * 0.6f) return
+            popupMoved = true
+            val idx = popupIndexAt(x)
             if (idx != popupSel) { popupSel = idx; invalidate() }
             return
         }
@@ -518,13 +546,25 @@ class KeyboardView(context: Context) : View(context) {
         popupKey = k
         popupChoices = choices
         popupSel = 0
-        // Popup sits above the key; wide lists start at the key and run right.
-        val cellW = min(l.keyWidth, width / max(1f, choices.size.toFloat()))
+        // Popup sits above the key with choice 0 (the number / second character) right
+        // above the finger. Lists that don't fit to the right run right-to-left instead.
+        val n = choices.size
+        var cellW = min(l.keyWidth, width / max(1f, n.toFloat()))
+        val fitsRight = k.cx - cellW / 2f >= 0 && k.cx - cellW / 2f + cellW * n <= width
+        val fitsLeft = k.cx + cellW / 2f <= width && k.cx + cellW / 2f - cellW * n >= 0
+        popupReverse = !fitsRight && (fitsLeft || k.cx > width / 2f)
+        if (!fitsRight && !fitsLeft) {
+            // Too many choices for full-size cells: shrink them so choice 0 can still
+            // be centred on the finger, running toward the roomier side.
+            val room = if (popupReverse) k.cx else width - k.cx
+            cellW = max(l.keyWidth * 0.6f, min(cellW, room / (n - 0.5f)))
+        }
         popupCellW = cellW
-        val totalW = cellW * choices.size
-        var left = k.cx - cellW / 2f
-        if (left + totalW > width) left = width - totalW
-        if (left < 0) left = 0f
+        val totalW = cellW * n
+        var left = if (popupReverse) k.cx + cellW / 2f - totalW else k.cx - cellW / 2f
+        left = left.coerceIn(0f, max(0f, width - totalW))
+        popupHoldX = if (count > 0) xs[count - 1] else k.cx
+        popupMoved = false
         val top = max(0f, k.top - l.keyHeight * 1.05f)
         popupRect.set(left, top, left + totalW, top + l.keyHeight)
         if (haptics) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
